@@ -1,14 +1,19 @@
+import { createBrowserRouter, RouterProvider } from "react-router";
+import Layout from "./components/Layout";
+import Dashboard from "./pages/Dashboard";
+import NewQuiz from "./pages/NewQuiz";
 
-import './App.css'
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { path: "dashboard", element: <Dashboard /> },
+      { path: "quiz/new", element: <NewQuiz /> },
+    ],
+  },
+]);
 
-function App() {
-
-
-  return (
-    <div className="min-h-screen bg-base-100">
-      <h1 className="text-4xl font-bold ">Welcome to the Quiz App</h1>
-    </div>
-  )
+export default function App() {
+  return <RouterProvider router={router} />;
 }
-
-export default App
