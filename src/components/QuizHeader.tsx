@@ -1,9 +1,9 @@
-import { Link, Outlet } from "react-router";
+import { Link } from "react-router";
 
 export default function QuizHeader() {
     return (
         <div>
-            <div className="flex items-center justify-between w-full px-8 py-3 bg-base-100">
+            <div className="flex items-center justify-between w-full px-8 py-3 ">
                 <div className="flex items-center space-x-2 text-sm">
                     <Link to="/dashboard" className="underline text-gray-700">
                         Quiz Dashboard
@@ -26,10 +26,7 @@ export default function QuizHeader() {
                 </div>
             </div>
 
-            {/* صفحات داخلی اینجا رندر میشن */}
-            <main className="p-6">
-                <Outlet />
-            </main>
+            {/* Internal pages will be rendered by Layout's <Outlet /> */}
         </div>
     );
 }
