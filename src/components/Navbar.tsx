@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Sun, RotateCcw } from "lucide-react";
 
 export default function Navbar() {
