@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> b635ca3505db820bde8898ceb2e7c89af4b64e16
 import { Sun, RotateCcw } from "lucide-react";
 
 export default function Navbar() {

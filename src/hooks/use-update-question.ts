@@ -1,0 +1,53 @@
+
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import API from '../utils/axios';
+import type { answerType } from '../types/Question';
+
+interface UpdateQuestionPayload {
+    id: number;
+    question: string;
+    answers: answerType[];
+    originalAnswers: answerType[];
+}
+
+export function useUpdateQuestion() {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async ({ id, question, answers, originalAnswers }: UpdateQuestionPayload) => {
+            // Update question text
+            await API.patch(`/questions/${id}`, { question });
+
+            // Find answers to add, update, delete
+            const originalIds = originalAnswers.map(a => a.id);
+            const currentIds = answers.map(a => a.id).filter(Boolean);
+
+            // Update existing answers
+            const updatePromises = answers
+                .filter(a => a.id && originalIds.includes(a.id))
+                .map(a => API.patch(`/answers/${a.id}`, {
+                    answerText: a.answerText,
+                    isCorrect: a.isCorrect,
+                }));
+
+            // Add new answers
+            const addPromises = answers
+                .filter(a => !a.id)
+                .map(a => API.post('/answers', {
+                    questionId: id,
+                    answerText: a.answerText,
+                    isCorrect: a.isCorrect,
+                }));
+
+            // Delete removed answers
+            const deletePromises = originalAnswers
+                .filter(a => !currentIds.includes(a.id))
+                .map(a => API.delete(`/answers/${a.id}`));
+
+            await Promise.all([...updatePromises, ...addPromises, ...deletePromises]);
+            return { id, question, answers };
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['questions'] });
+        },
+    });
+}

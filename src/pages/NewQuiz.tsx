@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { useQuizContext } from "../stores/QuizContext";
-import API from "../utils/axios";
-import type { questionType, answerType } from "../types/Question";
+import { useCreateQuestion } from "../hooks/use-create-question";
 
 export default function NewQuiz() {
   const navigate = useNavigate();
-  const { addQuestion, removeQuestion } = useQuizContext();
+  const { mutateAsync } = useCreateQuestion();
   const [question, setQuestion] = useState<string>("");
   const [correctAnswers, setCorrectAnswers] = useState<string[]>([""]);
   const [incorrectAnswers, setIncorrectAnswers] = useState<string[]>(["", "", ""]);
   const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const addCorrectAnswer = () => setCorrectAnswers([...correctAnswers, ""]);
   const addIncorrectAnswer = () => setIncorrectAnswers([...incorrectAnswers, ""]);
@@ -51,69 +50,21 @@ export default function NewQuiz() {
       return;
     }
 
-    // Optimistic UI
-    const tempId = Date.now();
-    const optimisticQuiz: questionType = {
-      id: tempId,
-      question,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      answers: [
-        ...validCorrect.map((a) => ({
-          id: Date.now() + Math.random(),
-          answerText: a,
-          isCorrect: true,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          quizId: tempId,
-        })),
-        ...validIncorrect.map((a) => ({
-          id: Date.now() + Math.random(),
-          answerText: a,
-          isCorrect: false,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          quizId: tempId,
-        })),
-      ],
-    };
-
-    addQuestion(optimisticQuiz);
-    setQuestion("");
-    setCorrectAnswers([""]);
-    setIncorrectAnswers(["", "", ""]);
-
+    setLoading(true);
     try {
-      const { data: questionData } = await API.post("/questions", { question });
-      const quizId = questionData.id;
-
-      await Promise.all([
-        ...validCorrect.map((ans) => {
-          const answerPayload: Partial<answerType> = {
-            answerText: ans,
-            quizId,
-            isCorrect: true,
-          };
-          return API.post("/answers", answerPayload);
-        }),
-        ...validIncorrect.map((ans) => {
-          const answerPayload: Partial<answerType> = {
-            answerText: ans,
-            quizId,
-            isCorrect: false,
-          };
-          return API.post("/answers", answerPayload);
-        }),
-      ]);
-
-      removeQuestion(tempId);
-      addQuestion({ ...optimisticQuiz, id: quizId });
+      const result = await mutateAsync({ question, correctAnswers: validCorrect, incorrectAnswers: validIncorrect });
+      if (result && result.id) {
+        console.log('Created quiz id:', result.id);
+      }
+      setQuestion("");
+      setCorrectAnswers([""]);
+      setIncorrectAnswers(["", "", ""]);
       alert("Quiz created successfully ✅");
       navigate("/dashboard");
-    } catch (err) {
-      console.error(err);
+    } catch {
       setError("Error creating quiz ❌");
-      removeQuestion(tempId);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -145,7 +96,7 @@ export default function NewQuiz() {
         <div className="border-l-4 border-green-500 p-4 mb-6 bg-base-200 rounded w-full">
           <div className="flex justify-between items-center mb-2">
             <span className="label-text font-bold text-green-400">Correct Answer</span>
-            <button className="btn btn-dash btn-xs" onClick={addCorrectAnswer}>
+            <button className="btn btn-dash btn-xs" onClick={addCorrectAnswer} disabled={loading}>
               + Add
             </button>
           </div>
@@ -163,7 +114,7 @@ export default function NewQuiz() {
                 onClick={() =>
                   setCorrectAnswers(correctAnswers.filter((_, idx) => idx !== i))
                 }
-                disabled={correctAnswers.length === 1}
+                disabled={correctAnswers.length === 1 || loading}
               >
                 🗑
               </button>
@@ -175,7 +126,7 @@ export default function NewQuiz() {
         <div className="border-l-4 border-red-500 p-4 mb-6 bg-base-200 rounded w-full">
           <div className="flex justify-between items-center mb-2">
             <span className="label-text font-bold text-red-400">Incorrect Answer</span>
-            <button className="btn btn-dash btn-xs" onClick={addIncorrectAnswer}>
+            <button className="btn btn-dash btn-xs" onClick={addIncorrectAnswer} disabled={loading}>
               + Add
             </button>
           </div>
@@ -193,7 +144,7 @@ export default function NewQuiz() {
                 onClick={() =>
                   setIncorrectAnswers(incorrectAnswers.filter((_, idx) => idx !== i))
                 }
-                disabled={incorrectAnswers.length === 1}
+                disabled={incorrectAnswers.length === 1 || loading}
               >
                 🗑
               </button>
@@ -211,11 +162,12 @@ export default function NewQuiz() {
               setIncorrectAnswers(["", "", ""]);
               setError("");
             }}
+            disabled={loading}
           >
             Cancel
           </button>
-          <button className="btn btn-primary" onClick={handleSubmit}>
-            Create Quiz
+          <button className="btn btn-primary" onClick={handleSubmit} disabled={loading}>
+            {loading ? "Saving..." : "Create Quiz"}
           </button>
         </div>
       </div>

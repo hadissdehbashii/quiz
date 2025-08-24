@@ -1,15 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Layout from "./components/Layout";
 import NewQuiz from "./pages/NewQuiz";
-<<<<<<< HEAD
+
 import EditQuiz from "./pages/EditQuiz";
-=======
+
 import Dashboard from "./pages/Dashboard";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
->>>>>>> b635ca3505db820bde8898ceb2e7c89af4b64e16
 
 const router = createBrowserRouter([
   {
