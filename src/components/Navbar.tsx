@@ -7,7 +7,7 @@ export default function Navbar() {
             <div className="text-2xl font-serif tracking-[0.2em]">QUIZ</div>
 
             {/* تاریخ با فلش‌ها */}
-            <div className="flex items-center space-x-6">
+            <div className="hidden md:flex items-center space-x-6 ">
                 <button className="text-lg font-light">&lt;</button>
                 <span className="text-sm font-light tracking-wide">
                     1 February-2024
@@ -20,10 +20,10 @@ export default function Navbar() {
                 <button className="btn btn-square btn-ghost">
                     <Sun className="w-5 h-5" />
                 </button>
-                <div className="w-9 h-9 flex items-center justify-center rounded-full bg-yellow-300">
+                <div className="hidden w-9 h-9 md:flex items-center justify-center rounded-full bg-yellow-300">
                     <RotateCcw className="w-5 h-5 text-black" />
                 </div>
-                <span className="text-sm font-light">Username</span>
+                <span className="hidden md:inline-block text-sm font-light">Username</span>
             </div>
         </div>
     );

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import API from "../utils/axios";
 import type { answerType } from "../types/Question";
+import toast from "react-hot-toast";
 
 export default function NewQuiz() {
     const navigate = useNavigate();
@@ -84,11 +85,11 @@ export default function NewQuiz() {
                 }),
             ]);
 
-            alert("Quiz created successfully ✅");
+            toast.success("Quiz created successfully!");
             navigate("/dashboard");
         } catch (err) {
             console.error(err);
-            setError("Error creating quiz ❌");
+            toast.error("Error creating quiz!!");
             // Revert optimistic UI
             setQuestion(prevState.question);
             setCorrectAnswers(prevState.correctAnswers);
@@ -99,7 +100,7 @@ export default function NewQuiz() {
     };
 
     return (
-        <div className="min-h-screen bg-base-200 flex justify-center py-5 px-2 sm:px-4 md:px-8 lg:px-16 xl:px-32">
+        <div className=" min-h-screen bg-base-200 flex justify-center py-5 px-2 sm:px-4 md:px-8 lg:px-16 xl:px-32">
             <div className="w-full size-auto shadow-xl p-4 sm:p-8 rounded-lg">
                 <h2 className="text-2xl font-bold text-purple-400 mb-2">Create New QUIZ</h2>
                 <p className="text-sm text-gray-400 mb-6">
