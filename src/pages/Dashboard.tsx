@@ -1,7 +1,4 @@
 
-
-
-
 import Card from "../components/Card";
 import { CircleFadingPlus } from "lucide-react";
 import { useNavigate } from "react-router";
@@ -36,3 +33,5 @@ const Dashboard = () => {
 }
 
 export default Dashboard;
+
+
