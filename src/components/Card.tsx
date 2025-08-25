@@ -21,15 +21,15 @@ const Card = ({ question }: { question: questionType }) => {
     });
 
     return (
-        <div className="border-2  mb-6 md:mx-10 p-5 rounded-2xl relative">
-            <div className="flex items-center justify-between border-b-2  pb-3">
+        <div className="border-2 border-gray-200 dark:border-gray-700 mb-6 md:mx-10 p-5 rounded-2xl relative">
+            <div className="flex items-center justify-between border-b-2 border-gray-200 dark:border-gray-700  pb-3">
                 <div className="flex items-center justify-center text-gray-500">
                     <p>john doe</p>
                     <Dot className="size-8 mt-2 m" />
                     <p>{formattedDate}</p>
                 </div>
                 <div className="flex justify-center items-center">
-                    <h1 className="bg-[#DAF1D0] text-[#417F25] px-3 py-1 rounded-2xl">Publish</h1>
+                    <h1 className="bg-[#DAF1D0] dark:text-[#DAF1D0] dark:bg-[#417F25] text-[#417F25] px-3 py-1 rounded-2xl">Publish</h1>
                     <div className="relative">
                         <span
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -67,7 +67,7 @@ const Card = ({ question }: { question: questionType }) => {
                     </div>
                 </div>
             </div>
-            <div className="mt-3 border-b-2 ">
+            <div className="mt-3 border-b-2 border-gray-200 dark:border-gray-700 ">
                 <h2 className="font-bold text-xl ">{question.question}</h2>
                 {question?.answers.map((p) => (
                     <div key={p.id} className="flex items-center gap-3 m-3">

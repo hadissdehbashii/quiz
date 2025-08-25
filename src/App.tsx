@@ -4,6 +4,7 @@ import NewQuiz from "./pages/NewQuiz";
 import Dashboard from "./pages/Dashboard";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
+import History from "./pages/History";
 
 
 import EditQuiz from "./pages/EditQuiz";
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: "dashboard", element: <Dashboard /> },
       { path: "quiz/new", element: <NewQuiz /> },
       { path: "quiz/edit/:id", element: <EditQuiz /> },
+      { path: "history", element: <History/> },
     ],
   },
 ]);
