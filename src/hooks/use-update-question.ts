@@ -1,4 +1,3 @@
-
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import API from '../utils/axios';
 import type { answerType } from '../types/Question';
@@ -34,7 +33,7 @@ export function useUpdateQuestion() {
             const addPromises = validAnswers
                 .filter(a => !a.id)
                 .map(a => API.post('/answers', {
-                    questionId: id,
+                    quizId: id,
                     answerText: a.answerText,
                     isCorrect: a.isCorrect,
                 }));
