@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router";
 import { useUpdateQuestion } from "../hooks/use-update-question";
 import { useGetQuestion } from "../hooks/use-get-question";
 import type { answerType } from "../types/Question";
+import { toast } from "react-hot-toast";
+import { Trash2 } from "lucide-react";
 
 export default function EditQuiz() {
     const navigate = useNavigate();
@@ -90,9 +92,10 @@ export default function EditQuiz() {
                 answers: validAnswers,
                 originalAnswers,
             });
-            alert("Quiz updated successfully ✅");
+            toast.success("Quiz updated successfully ✅");
             navigate("/dashboard");
         } catch {
+            toast.error("Error updating quiz ❌");
             setError("Error updating quiz ❌");
         } finally {
             setLoading(false);
@@ -112,9 +115,9 @@ export default function EditQuiz() {
     }
 
     return (
-        <div className="min-h-screen bg-base-200 flex justify-center py-5 px-2 sm:px-4 md:px-8 lg:px-16 xl:px-32">
+        <div className="min-h-screen  flex justify-center py-5 px-2 sm:px-4 md:px-8 lg:px-16 xl:px-32">
             <div className="w-full size-auto shadow-xl p-4 sm:p-8 rounded-lg">
-                <h2 className="text-2xl font-bold text-purple-400 mb-2">Edit QUIZ</h2>
+                <h2 className="text-2xl font-bold" style={{ color: '#6F42C1' }}>Edit QUIZ</h2>
                 <p className="text-sm text-gray-400 mb-6">
                     Fill in the details to update your question and answers.
                 </p>
@@ -160,11 +163,11 @@ export default function EditQuiz() {
                                     onChange={(e) => handleAnswerChange(index, e.target.value)}
                                 />
                                 <button
-                                    className="btn btn-error btn-sm"
+                                    className="btn btn-sm flex items-center justify-center shadow-none bg-transparent border-none hover:bg-transparent"
                                     onClick={() => removeAnswer(index)}
                                     disabled={answers.filter((a) => a.isCorrect).length === 1 || loading || isLoading}
                                 >
-                                    🗑
+                                    <Trash2 size={18} color="#ef4444" />
                                 </button>
                             </div>
                         ))}
@@ -195,11 +198,11 @@ export default function EditQuiz() {
                                     onChange={(e) => handleAnswerChange(index, e.target.value)}
                                 />
                                 <button
-                                    className="btn btn-error btn-sm"
+                                    className="btn btn-sm flex items-center justify-center shadow-none bg-transparent border-none hover:bg-transparent"
                                     onClick={() => removeAnswer(index)}
                                     disabled={answers.filter((a) => !a.isCorrect).length === 1 || loading || isLoading}
                                 >
-                                    🗑
+                                    <Trash2 size={18} color="#ef4444" />
                                 </button>
                             </div>
                         ))}
@@ -214,7 +217,7 @@ export default function EditQuiz() {
                     >
                         Cancel
                     </button>
-                    <button className="btn btn-primary" onClick={handleSubmit} disabled={loading || isLoading}>
+                    <button className="btn" style={{ backgroundColor: '#6F42C1', color: '#fff' }} onClick={handleSubmit} disabled={loading || isLoading}>
                         {loading ? "Saving..." : "Update Quiz"}
                     </button>
                 </div>

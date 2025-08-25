@@ -12,7 +12,7 @@ const Dashboard = () => {
         <div>
             <div className="flex p-5 justify-between md:mx-10 ">
                 <h1 className="text-2xl font-bold">Quiz Dashboard</h1>
-                <button onClick={() => navigate("/quiz/new")} className="btn btn-primary hidden md:flex items-center gap-2 ">
+                <button onClick={() => navigate("/quiz/new")} className="btn hidden md:flex items-center gap-2 " style={{ backgroundColor: '#6F42C1', color: '#fff' }}>
                     <CircleFadingPlus />
                     New Quiz
                 </button>

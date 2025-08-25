@@ -17,20 +17,21 @@ export function useUpdateQuestion() {
             // Update question text
             await API.patch(`/questions/${id}`, { question });
 
-            // Find answers to add, update, delete
+            // Only send valid answers
+            const validAnswers = answers.filter(a => a.answerText && a.answerText.trim() !== "");
             const originalIds = originalAnswers.map(a => a.id);
-            const currentIds = answers.map(a => a.id).filter(Boolean);
+            const currentIds = validAnswers.map(a => a.id).filter(Boolean);
 
-            // Update existing answers
-            const updatePromises = answers
+            // Update existing answers (PATCH only answerText, isCorrect)
+            const updatePromises = validAnswers
                 .filter(a => a.id && originalIds.includes(a.id))
                 .map(a => API.patch(`/answers/${a.id}`, {
                     answerText: a.answerText,
                     isCorrect: a.isCorrect,
                 }));
 
-            // Add new answers
-            const addPromises = answers
+            // Add new answers (POST with questionId)
+            const addPromises = validAnswers
                 .filter(a => !a.id)
                 .map(a => API.post('/answers', {
                     questionId: id,
@@ -44,7 +45,7 @@ export function useUpdateQuestion() {
                 .map(a => API.delete(`/answers/${a.id}`));
 
             await Promise.all([...updatePromises, ...addPromises, ...deletePromises]);
-            return { id, question, answers };
+            return { id, question, answers: validAnswers };
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['questions'] });
