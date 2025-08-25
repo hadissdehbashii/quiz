@@ -23,7 +23,7 @@ const MobileFooter = () => {
             >
               <Plus className="w-6 h-6" />
             </Link>
-           <Link to="/dashboard" className={`flex items-center gap-1 transition-all ${isActive('/history')?'text-purple-700 font-semibold':'text-gray-600'} `}>
+           <Link to="/history" className={`flex items-center gap-1 transition-all ${isActive('/history')?'text-purple-700 font-semibold':'text-gray-600'} `}>
              <History/>
              {isActive('/history')&& <span className='text-sm'>History</span>}
            </Link>
