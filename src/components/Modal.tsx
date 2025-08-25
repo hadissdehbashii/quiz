@@ -32,7 +32,9 @@ const Modal = ({onClose,questionId,questionText}:modalProp) => {
         <div className="flex justify-end mt-4 gap-3">
           <button onClick={onClose} className="btn">Cancel</button>
           <button disabled={isPending} className="btn bg-[#D00000] text-gray-100"
-          onClick={()=>deleteQuestion(questionId,{onSuccess:onClose})}>{isPending?"Deleting...":"Submit"}</button>
+          onClick={()=>deleteQuestion(questionId,{onSuccess:onClose})}>{isPending?<span className="loading loading-spinner text-error">
+          </span>
+          :"Submit"}</button>
         </div>
       </div>
     </div>
