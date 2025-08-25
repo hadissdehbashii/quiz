@@ -21,7 +21,7 @@ const Card = ({ question }: { question: questionType }) => {
     });
 
     return (
-        <div className="border-2 border-gray-200 dark:border-gray-700 mb-6 md:mx-10 p-5 rounded-2xl relative">
+        <div className="border-2 border-gray-200 dark:border-gray-700 mb-6 md:mx-10 p-5 rounded-2xl relative font-poppins">
             <div className="flex items-center justify-between border-b-2 border-gray-200 dark:border-gray-700  pb-3">
                 <div className="flex items-center justify-center text-gray-500">
                     <p>john doe</p>
