@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import useGetQuestions from "../hooks/use-get-questions";
 
 const Dashboard = () => {
-    const { data: questions = [] } = useGetQuestions();
+    const { data: questions = [], isLoading } = useGetQuestions();
     const navigate = useNavigate();
 
     return (
@@ -17,17 +17,23 @@ const Dashboard = () => {
                     New Quiz
                 </button>
             </div>
-            <div className="p-5 grid grid-cols-1">
-                {questions.length > 0 ? (
-                    questions.map((q) => (
-                        <Card key={q.id} question={q} />
-                    ))
-                ) : (
-                    <div className="text-center font-bold text-gray-400">
-                        <p>No questions available...</p>
-                    </div>
-                )}
-            </div>
+            {isLoading ? (
+                <div className="flex items-center justify-center min-h-[60vh] pt-24">
+                    <span className="loading loading-spinner loading-lg"></span>
+                </div>
+            ) : (
+                <div className="p-5 grid grid-cols-1">
+                    {questions.length > 0 ? (
+                        questions.map((q) => (
+                            <Card key={q.id} question={q} />
+                        ))
+                    ) : (
+                        <div className="text-center font-bold text-gray-400">
+                            <p>No questions available...</p>
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 }
