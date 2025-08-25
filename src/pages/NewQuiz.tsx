@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useCreateQuestion } from "../hooks/use-create-question";
+import { toast } from "react-hot-toast";
+import { Trash2 } from "lucide-react";
 
 export default function NewQuiz() {
   const navigate = useNavigate();
@@ -52,16 +54,21 @@ export default function NewQuiz() {
 
     setLoading(true);
     try {
-      const result = await mutateAsync({ question, correctAnswers: validCorrect, incorrectAnswers: validIncorrect });
+      const result = await mutateAsync({
+        question,
+        correctAnswers: validCorrect,
+        incorrectAnswers: validIncorrect,
+      });
       if (result && result.id) {
-        console.log('Created quiz id:', result.id);
+        console.log("Created quiz id:", result.id);
       }
       setQuestion("");
       setCorrectAnswers([""]);
       setIncorrectAnswers(["", "", ""]);
-      alert("Quiz created successfully ✅");
+      toast.success("Quiz created successfully ✅");
       navigate("/dashboard");
     } catch {
+      toast.error("Error creating quiz ❌");
       setError("Error creating quiz ❌");
     } finally {
       setLoading(false);
@@ -69,9 +76,9 @@ export default function NewQuiz() {
   };
 
   return (
-    <div className="min-h-screen bg-base-200 flex justify-center py-5 px-2 sm:px-4 md:px-8 lg:px-16 xl:px-32">
+    <div className="min-h-screen  flex justify-center py-5 px-2 sm:px-4 md:px-8 lg:px-16 xl:px-32">
       <div className="w-full size-auto shadow-xl p-4 sm:p-8 rounded-lg">
-        <h2 className="text-2xl font-bold text-purple-400 mb-2">Create New QUIZ</h2>
+        <h2 className="text-2xl font-bold" style={{ color: '#6F42C1' }}>Create New QUIZ</h2>
         <p className="text-sm text-gray-400 mb-6">
           Fill in the details to create a new question with at least 4 answers.
         </p>
@@ -101,7 +108,7 @@ export default function NewQuiz() {
             </button>
           </div>
           {correctAnswers.map((ans, i) => (
-            <div key={i} className="flex flex-col sm:flex-row items-stretch gap-2 mb-2 w-full">
+            <div key={i} className="flex items-center gap-2 mb-2 w-full">
               <input
                 type="text"
                 placeholder="Enter Correct Answer"
@@ -110,13 +117,13 @@ export default function NewQuiz() {
                 onChange={(e) => handleCorrectChange(i, e.target.value)}
               />
               <button
-                className="btn btn-error btn-sm"
+                className="btn btn-sm flex items-center justify-center shadow-none bg-transparent border-none hover:bg-transparent"
                 onClick={() =>
                   setCorrectAnswers(correctAnswers.filter((_, idx) => idx !== i))
                 }
                 disabled={correctAnswers.length === 1 || loading}
               >
-                🗑
+                <Trash2 size={18} color="#ef4444" />
               </button>
             </div>
           ))}
@@ -131,7 +138,7 @@ export default function NewQuiz() {
             </button>
           </div>
           {incorrectAnswers.map((ans, i) => (
-            <div key={i} className="flex flex-col sm:flex-row items-stretch gap-2 mb-2 w-full">
+            <div key={i} className="flex items-center gap-2 mb-2 w-full">
               <input
                 type="text"
                 placeholder="Enter Incorrect Answer"
@@ -140,13 +147,13 @@ export default function NewQuiz() {
                 onChange={(e) => handleIncorrectChange(i, e.target.value)}
               />
               <button
-                className="btn btn-error btn-sm"
+                className="btn btn-sm flex items-center justify-center shadow-none bg-transparent border-none hover:bg-transparent"
                 onClick={() =>
                   setIncorrectAnswers(incorrectAnswers.filter((_, idx) => idx !== i))
                 }
                 disabled={incorrectAnswers.length === 1 || loading}
               >
-                🗑
+                <Trash2 size={18} color="#ef4444" />
               </button>
             </div>
           ))}
@@ -156,17 +163,16 @@ export default function NewQuiz() {
         <div className="flex flex-col sm:flex-row justify-end gap-3 w-full mt-4">
           <button
             className="btn"
-            onClick={() => {
-              setQuestion("");
-              setCorrectAnswers([""]);
-              setIncorrectAnswers(["", "", ""]);
-              setError("");
-            }}
+            onClick={() => navigate("/dashboard")}
             disabled={loading}
           >
             Cancel
           </button>
-          <button className="btn btn-primary" onClick={handleSubmit} disabled={loading}>
+          <button
+            className="btn" style={{ backgroundColor: '#6F42C1', color: '#fff' }}
+            onClick={handleSubmit}
+            disabled={loading}
+          >
             {loading ? "Saving..." : "Create Quiz"}
           </button>
         </div>

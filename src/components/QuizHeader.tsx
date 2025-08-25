@@ -3,21 +3,23 @@ import { Link } from "react-router";
 export default function QuizHeader() {
     return (
         <div>
-            <div className="flex items-center justify-between w-full px-8 py-3 ">
-                <div className="flex items-center space-x-2 text-sm">
-                    <Link to="/dashboard" className="underline text-gray-700">
-                        Quiz Dashboard
-                    </Link>
-                    <span className="text-lg">››</span>
-                    <Link to="/quiz/new" className="text-indigo-900 font-medium">
-                        New Quiz
-                    </Link>
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full px-4 md:px-8 py-3 gap-4 md:gap-0">
+                <div className="flex flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-2 text-sm">
+                    <div className="flex items-center gap-2">
+                        <Link to="/dashboard" className="underline text-gray-700 text-base md:text-sm">
+                            Quiz Dashboard
+                        </Link>
+                        <span className="text-lg md:text-base">››</span>
+                        <Link to="/quiz/new" className="text-indigo-900 font-medium text-base md:text-sm">
+                            New Quiz
+                        </Link>
+                    </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-3">
                     <span className="text-base font-medium">Status</span>
                     <input
                         type="checkbox"
-                        className="toggle toggle-success"
+                        className="toggle border-2" style={{ accentColor: '#6F42C1' }}
                         defaultChecked
                     />
                     <span className="text-sm text-gray-500">
