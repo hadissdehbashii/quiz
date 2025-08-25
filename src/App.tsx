@@ -7,6 +7,14 @@ import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
+import EditQuiz from "./pages/EditQuiz";
+
+import Dashboard from "./pages/Dashboard";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
+
+const queryClient = new QueryClient();
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,6 +23,7 @@ const router = createBrowserRouter([
       { index: true, element: <Dashboard /> },
       { path: "dashboard", element: <Dashboard /> },
       { path: "quiz/new", element: <NewQuiz /> },
+      { path: "quiz/edit/:id", element: <EditQuiz /> },
     ],
   },
 ]);
