@@ -76,7 +76,7 @@ export default function NewQuiz() {
   };
 
   return (
-    <div className="min-h-screen  flex justify-center py-5 px-2 sm:px-4 md:px-8 lg:px-16 xl:px-32">
+    <div className="min-h-screen  flex justify-center py-5 px-2 sm:px-4 md:px-8 lg:px-16 xl:px-32 font-poppins">
       <div className="w-full size-auto shadow-xl p-4 sm:p-8 rounded-lg">
         <h2 className="text-2xl font-bold" style={{ color: '#6F42C1' }}>Create New QUIZ</h2>
         <p className="text-sm text-gray-400 mb-6">

@@ -2,7 +2,7 @@ import { Sun, RotateCcw } from "lucide-react";
 
 export default function Navbar() {
     return (
-        <div className="w-full flex items-center justify-between bg-base-300 px-8 py-3 shadow-sm">
+        <div className="w-full flex items-center justify-between bg-base-300 px-8 py-3 shadow-sm font-poppins">
             <div className="text-2xl font-serif tracking-[0.2em]">QUIZ</div>
 
             <div className="hidden md:flex items-center space-x-6 ">
