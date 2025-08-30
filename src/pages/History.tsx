@@ -6,7 +6,7 @@ const History = () => {
 
   return (
     <div>
-      <div className="flex p-5 justify-between md:mx-10">
+      <div className="flex p-5 justify-between md:mx-10 font-poppins">
         <h1 className="text-2xl font-bold">Quiz History</h1>
       </div>
 
