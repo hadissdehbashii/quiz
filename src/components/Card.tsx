@@ -29,7 +29,7 @@ const Card = ({ question }: { question: questionType }) => {
                     <p>{formattedDate}</p>
                 </div>
                 <div className="flex justify-center items-center">
-                    <h1 className="  btn bg-success bg-[#DAF1D0] dark:text-[#DAF1D0] dark:bg-[#417F25] text-[#417F25] px-3 py-1 rounded-2xl">Publish</h1>
+                    <h1 className="  btn  bg-[#DAF1D0] dark:text-[#DAF1D0] dark:bg-[#417F25] text-[#417F25] px-3 py-1 rounded-2xl">Publish</h1>
                     <div className="relative">
                         <span
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}

@@ -10,6 +10,9 @@ const Navbar = () => {
     const setTheme = useThemeStore((state) => state.setTheme);
 
     const themeIcon = theme === "light" ? <Sun className="w-5 h-5" /> : theme === "dark" ? <Moon className="w-5 h-5" /> : <Monitor className="w-5 h-5" />;
+    const date = new Date();
+    const formattedDate = `${date.getDate()} ${date.toLocaleString("en-US", { month: "long" })} - ${date.getFullYear()}`;
+
 
 
 
@@ -20,7 +23,7 @@ const Navbar = () => {
             <div className="hidden md:flex items-center space-x-6 ">
                 <button className="text-lg font-light">&lt;</button>
                 <span className="text-sm font-light tracking-wide">
-                    1 February-2024
+                    {formattedDate}
                 </span>
                 <button className="text-lg font-light">&gt;</button>
             </div>
