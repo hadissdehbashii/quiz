@@ -17,11 +17,6 @@ export default function QuizHeader() {
                 </div>
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-3">
                     <span className="text-base font-medium">Status</span>
-                    <input
-                        type="checkbox"
-                        className="toggle border-2" style={{ accentColor: '#6F42C1' }}
-                        defaultChecked
-                    />
                     <span className="text-sm text-gray-500">
                         Your post will be saved as a public
                     </span>
