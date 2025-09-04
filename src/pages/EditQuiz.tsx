@@ -50,12 +50,7 @@ export default function EditQuiz() {
     };
 
     // Toggle correct/incorrect
-    const toggleCorrect = (index: number) => {
-        const updated = answers.map((a, idx) =>
-            idx === index ? { ...a, isCorrect: !a.isCorrect } : a
-        );
-        setAnswers(updated);
-    };
+
 
     // Remove answer
     const removeAnswer = (index: number) => {
