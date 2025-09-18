@@ -59,7 +59,7 @@ const Card = ({ question }: { question: questionType }) => {
                                             setIsModalOpen(true);
                                         }}
                                     >
-                                        Delete
+                                        Delete it
                                     </button>
                                 </li>
                             </ul>
